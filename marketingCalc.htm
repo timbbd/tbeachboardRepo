@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Demo</title>
+    <style>
+        input  {
+            display: block;
+            text-align: right;
+        }
+
+        input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+        </style>
+
+<script src="jquery.js"></script>
+<script>
+
+
+    $(function(){
+  $("#btnSubmit").click(function(e){
+        // Grab Input Values
+        var totalRev = $('.totalRev').val();
+        var totalOrders = $('.totalOrders').val();
+        var customersLastYear = $('.customersLastYear').val();
+        
+        
+        
+        // Calculate average order Value and Purchase Frequency
+        var avgOrderVal = totalRev / totalOrders;
+        var purchFreq = totalOrders / customersLastYear;
+        $('.avgOrderVal').html(avgOrderVal.toFixed(2));
+        $('.purchFreq').html(purchFreq.toFixed(2));
+
+        // Calculate Customer Value
+        var avgOrderVal = $('.avgOrderVal').html();
+        var purchFreq = $('.purchFreq').html();
+        var customerVal = avgOrderVal * purchFreq;
+        $('.customerVal').html(customerVal.toFixed(2));
+
+        //Calculate Cutomer Lifetime Value
+        var customerVal = $('.customerVal').html();
+        $('.customerLifeVal').html(customerVal * 3);
+
+
+        
+  });
+});
+
+
+</script>
+</head>
+
+<body>
+
+    <h1>Simple Customer Lifetime Value Calculator</h1>
+    <form>
+        Total Revenue Last Year (365): <input type="number" class="totalRev"><br>
+        Number of Orders Last Year (365): <input type="number" class="totalOrders"><br>
+        Unique Customers Last Year (365): <input type="number" class="customersLastYear"><br>
+        <button type="button" id="btnSubmit" >Calculate</button>
+    </form>
+
+    <p>Average Order Value: $<span class="avgOrderVal">&nbsp;</span></p>
+    <p>Purchase Frequency: <span class="purchFreq">&nbsp;</span></p>
+    <p>Customer Value: $<span class="customerVal">&nbsp;</span></p>
+    <p>Customer Lifetime Value(CLV): $<span class="customerLifeVal">&nbsp;</span></p>
+</body>
+</html>
